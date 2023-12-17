@@ -203,7 +203,7 @@ class ChessGame extends ChangeNotifier {
   }
 
   void skipTurn() {
-    // TODO: Implement this
+    lastMovedPiece = (lastMovedPiece == "white") ? "black" : "white";
     notifyListeners();
   }
 
