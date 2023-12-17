@@ -60,9 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: const Text('Undo Move'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      // Add logic for Skip Turn
-                    },
+                    onPressed: () => chessGame.skipTurn(),
                     child: const Text('Skip Turn'),
                   ),
                   ElevatedButton(

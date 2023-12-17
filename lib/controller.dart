@@ -202,6 +202,12 @@ class ChessGame extends ChangeNotifier {
     }
   }
 
+  void skipTurn() {
+    // TODO: Implement this
+    notifyListeners();
+  }
+
+  // ! NOTE: I lost my thoughts here
   void onCellClick(int row, int col) {
     log('Row: $row\nCol: $col');
     final clickedPiece = getPieceAt(row, col);
