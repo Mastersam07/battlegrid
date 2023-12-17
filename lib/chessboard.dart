@@ -14,7 +14,6 @@ class ChessboardGrid extends StatefulWidget {
 
 class _ChessboardGridState extends State<ChessboardGrid> {
   Piece? selectedPiece;
-  CellPosition? selectedPosition;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,13 +53,13 @@ class _ChessboardGridState extends State<ChessboardGrid> {
                   // If no piece is selected, select this piece
                   setState(() {
                     selectedPiece = piece;
-                    selectedPosition = CellPosition(row, col);
+                    widget.chessGame.selectedCell = CellPosition(row, col);
                   });
                 } else if (selectedPiece == piece) {
                   // If the same piece is tapped again, deselect it
                   setState(() {
                     selectedPiece = null;
-                    selectedPosition = null;
+                    widget.chessGame.selectedCell = null;
                   });
                 }
               },
@@ -95,7 +94,7 @@ class _ChessboardGridState extends State<ChessboardGrid> {
                   widget.chessGame.movePiece(selectedPiece!, newPosition);
                   setState(() {
                     selectedPiece = null;
-                    selectedPosition = null;
+                    widget.chessGame.selectedCell = null;
                   });
                 }
               },

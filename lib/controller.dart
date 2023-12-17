@@ -208,6 +208,7 @@ class ChessGame extends ChangeNotifier {
   }
 
   // ! NOTE: I lost my thoughts here
+  // ! Perhaps i wanted to move all cell clicks to here
   void onCellClick(int row, int col) {
     log('Row: $row\nCol: $col');
     final clickedPiece = getPieceAt(row, col);
