@@ -36,12 +36,27 @@ class _ChessboardGridState extends State<ChessboardGrid> {
 
           if (row == 5 && col == 5) {
             // Check if it's the center cell
-            return CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.green[700],
-              child: const CircleAvatar(
-                radius: 8,
-                backgroundColor: Colors.white,
+            return GestureDetector(
+              onTap: () {
+                if (selectedPiece == null) return;
+                final newPosition = CellPosition(row, col);
+                if (selectedPiece!.canMove(selectedPiece!.position, newPosition,
+                    widget.chessGame.chessboard)) {
+                  // Move the piece
+                  widget.chessGame.movePiece(selectedPiece!, newPosition);
+                  setState(() {
+                    selectedPiece = null;
+                    widget.chessGame.selectedCell = null;
+                  });
+                }
+              },
+              child: CircleAvatar(
+                radius: 20,
+                backgroundColor: Colors.green[700],
+                child: const CircleAvatar(
+                  radius: 8,
+                  backgroundColor: Colors.white,
+                ),
               ),
             );
           }
