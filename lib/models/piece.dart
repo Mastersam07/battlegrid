@@ -199,17 +199,17 @@ class Echo extends Piece {
     // TODO: Not sure if its only Ghost or all units
     // TODO: Where its any unit, remove obstacle detection
     // Check for obstacles along the path
-    int stepRow = rowDiff != 0 ? (rowDiff > 0 ? 1 : -1) : 0;
-    int stepCol = colDiff != 0 ? (colDiff > 0 ? 1 : -1) : 0;
+    // int stepRow = rowDiff != 0 ? (rowDiff > 0 ? 1 : -1) : 0;
+    // int stepCol = colDiff != 0 ? (colDiff > 0 ? 1 : -1) : 0;
 
-    for (int i = 1; i.abs() < rowDiff.abs() || i.abs() < colDiff.abs(); i++) {
-      int nextRow = from.row + i * stepRow;
-      int nextCol = from.col + i * stepCol;
+    // for (int i = 1; i.abs() < rowDiff.abs() || i.abs() < colDiff.abs(); i++) {
+    //   int nextRow = from.row + i * stepRow;
+    //   int nextCol = from.col + i * stepCol;
 
-      if (board[nextRow][nextCol] != null) {
-        return false; // Blocked by another piece
-      }
-    }
+    //   if (board[nextRow][nextCol] != null) {
+    //     return false; // Blocked by another piece
+    //   }
+    // }
 
     // Check for capture
     Piece? targetPiece = board[to.row][to.col];
