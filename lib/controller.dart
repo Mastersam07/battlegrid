@@ -272,7 +272,7 @@ class ChessGame extends ChangeNotifier {
     // Check if the destination cell is empty or contains an opponent's piece
     final Piece? targetPiece = getPieceAt(to.row, to.col);
 
-    if (targetPiece != null && targetPiece.color == lastMovedPiece) {
+    if (targetPiece != null && targetPiece.color == movedPiece.color) {
       return false; // Cannot capture own piece
     }
 

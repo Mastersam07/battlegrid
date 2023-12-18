@@ -76,6 +76,17 @@ class _ChessboardGridState extends State<ChessboardGrid> {
                     selectedPiece = null;
                     widget.chessGame.selectedCell = null;
                   });
+                } else {
+                  final newPosition = CellPosition(row, col);
+                  if (selectedPiece!.canMove(selectedPiece!.position,
+                      newPosition, widget.chessGame.chessboard)) {
+                    // Move the piece
+                    widget.chessGame.movePiece(selectedPiece!, newPosition);
+                    setState(() {
+                      selectedPiece = null;
+                      widget.chessGame.selectedCell = null;
+                    });
+                  }
                 }
               },
               child: Container(

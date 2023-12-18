@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'position.dart';
 
 class Piece {
@@ -106,27 +108,22 @@ class Tank extends Piece {
     }
 
     // Check for obstacles along the path
-    if (rowDiff != 0) {
-      // Vertical movement
-      int step = rowDiff > 0 ? 1 : -1; // Determine the direction of movement
-      for (int i = 1; i.abs() < rowDiff.abs(); i++) {
-        if (board[from.row + i * step][from.col] != null) {
-          return false; // Blocked by another piece
-        }
-      }
-    } else {
-      // Horizontal movement
-      int step = colDiff > 0 ? 1 : -1; // Determine the direction of movement
-      for (int i = 1; i.abs() < colDiff.abs(); i++) {
-        if (board[from.row][from.col + i * step] != null) {
-          return false; // Blocked by another piece
-        }
+    int stepRow = rowDiff != 0
+        ? (rowDiff > 0 ? 1 : -1)
+        : 0; // Determine the direction of vertical movement
+    int stepCol = colDiff != 0
+        ? (colDiff > 0 ? 1 : -1)
+        : 0; // Determine the direction of horizontal movement
+    int distance = max(rowDiff.abs(), colDiff.abs());
+    for (int i = 1; i < distance; i++) {
+      if (board[from.row + i * stepRow][from.col + i * stepCol] != null) {
+        return false; // Blocked by another piece
       }
     }
 
     // Check for capture
     Piece? targetPiece = board[to.row][to.col];
-    if (targetPiece != null || targetPiece?.color == color) {
+    if (targetPiece != null && targetPiece.color == color) {
       return false; // Cannot capture own piece or empty cell
     }
 
@@ -160,20 +157,9 @@ class Ghost extends Piece {
       return false; // Ghost must move in an L-shape
     }
 
-    // Check for obstacles along the path
-    int stepRow = rowDiff > 0 ? 1 : (rowDiff < 0 ? -1 : 0);
-    int stepCol = colDiff > 0 ? 1 : (colDiff < 0 ? -1 : 0);
-
-    int nextRow = from.row + stepRow;
-    int nextCol = from.col + stepCol;
-
-    if (board[nextRow][nextCol] != null) {
-      return false; // Blocked by another piece
-    }
-
     // Check for capture
     Piece? targetPiece = board[to.row][to.col];
-    if (targetPiece != null || targetPiece?.color == color) {
+    if (targetPiece != null && targetPiece.color == color) {
       return false; // Cannot capture own piece or empty cell
     }
 
@@ -209,6 +195,9 @@ class Echo extends Piece {
       return false; // Echo can only move diagonally, vertically, or horizontally
     }
 
+    // TODO: Echo can leap over units like Ghost
+    // TODO: Not sure if its only Ghost or all units
+    // TODO: Where its any unit, remove obstacle detection
     // Check for obstacles along the path
     int stepRow = rowDiff != 0 ? (rowDiff > 0 ? 1 : -1) : 0;
     int stepCol = colDiff != 0 ? (colDiff > 0 ? 1 : -1) : 0;
@@ -224,7 +213,7 @@ class Echo extends Piece {
 
     // Check for capture
     Piece? targetPiece = board[to.row][to.col];
-    if (targetPiece != null || targetPiece?.color == color) {
+    if (targetPiece != null && targetPiece.color == color) {
       return false; // Cannot capture own piece
     }
 
@@ -321,8 +310,8 @@ class Peacekeeper extends Piece {
 
       // Check for capture
       Piece? targetPiece = board[to.row][to.col];
-      if (targetPiece != null || targetPiece?.color == color) {
-        return false; // Cannot capture own piece or empty cell
+      if (targetPiece != null && targetPiece.color == color) {
+        return false; // Cannot capture own piece
       }
 
       return true; // Valid move
@@ -359,8 +348,8 @@ class CommandCenter extends Piece {
     if (rowDiff >= -1 && rowDiff <= 1 && colDiff >= -1 && colDiff <= 1) {
       // Check for capture
       Piece? targetPiece = board[to.row][to.col];
-      if (targetPiece != null || targetPiece?.color == color) {
-        return false; // Cannot capture own piece or move to an occupied cell
+      if (targetPiece != null && targetPiece.color == color) {
+        return false; // Cannot capture own piece
       }
 
       return true; // Valid move
